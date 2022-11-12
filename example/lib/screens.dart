@@ -191,17 +191,44 @@ class MainScreen3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepOrangeAccent,
-      body: Container(
-        child: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              "Go Back to Second Screen",
-              style: TextStyle(color: Colors.white),
+    return NestedWillPopScope(
+      onWillPop: () {
+        return showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Close'),
+              content: Text('Close this screen?'),
+              actions: [
+                GestureDetector(
+                  child: Text('Yes'),
+                  onTap: () async {
+                    Navigator.pop(context, true);
+                  },
+                ),
+                GestureDetector(
+                  child: Text('No'),
+                  onTap: () async {
+                    Navigator.pop(context, false);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Scaffold(
+        backgroundColor: Colors.deepOrangeAccent,
+        body: Container(
+          child: Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).maybePop();
+              },
+              child: Text(
+                "Go Back to Second Screen",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
