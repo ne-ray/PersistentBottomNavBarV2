@@ -692,10 +692,26 @@ class _PersistentTabViewState extends State<PersistentTabView> {
           null);
     }
     if (widget.handleAndroidBackButtonPress || widget.onWillPop != null) {
-      return WillPopScope(
-        onWillPop:
-            !widget.handleAndroidBackButtonPress && widget.onWillPop != null
-                ? () => widget.onWillPop!(_contextList[_controller!.index])
+      return NestedWillPopScope(
+        onWillPop: !widget.handleAndroidBackButtonPress && widget.onWillPop != null
+            ? () => widget.onWillPop!(_contextList[_controller!.index])
+            : widget.handleAndroidBackButtonPress && widget.onWillPop != null
+                ? () async {
+                    if (_controller!.index == 0 &&
+                        !Navigator.canPop(_contextList.first!)) {
+                      return widget.onWillPop!(_contextList.first);
+                    } else {
+                      if (Navigator.canPop(_contextList[_controller!.index]!)) {
+                        Navigator.pop(_contextList[_controller!.index]!);
+                      } else {
+                        if (widget.onItemSelected != null) {
+                          widget.onItemSelected!(0);
+                        }
+                        _controller!.index = 0;
+                      }
+                      return false;
+                    }
+                  }
                 : () async {
                     if (_controller!.index == 0 &&
                         !Navigator.canPop(_contextList.first!)) {

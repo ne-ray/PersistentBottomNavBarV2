@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
 //Animations
 part 'animations/animations.dart';
 part 'models/nav-bar-animation.model.dart';
@@ -17,6 +18,7 @@ part 'models/persistent-bottom-nav-item.widget.dart';
 part 'models/persistent-bottom-nav-bar-styles.widget.dart';
 part 'models/persistent-bottom-nav-bar.widget.dart';
 //Models
+part 'models/nested_will_pop_scope.dart';
 part 'models/persistent-nav-bar-scaffold.widget.dart';
 part 'models/route-settings.model.dart';
 part 'models/tab-view.widget.dart';
