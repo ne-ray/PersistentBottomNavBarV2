@@ -243,7 +243,7 @@ class _ProvidedStylesExampleState extends State<ProvidedStylesExample> {
             : kBottomNavigationBarHeight,
         hideNavigationBarWhenKeyboardShows: true,
         margin: EdgeInsets.all(0.0),
-        popActionScreens: PopActionScreensType.all,
+        popActionScreens: PopActionScreensType.once,
         bottomScreenMargin: 0.0,
         onWillPop: (context) async {
           await showDialog(

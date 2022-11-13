@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:persistent_bottom_nav_bar/models/nested_will_pop_scope.dart';
 
 import 'modal-screen.dart';
 
@@ -192,17 +193,44 @@ class MainScreen3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepOrangeAccent,
-      body: Container(
-        child: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              "Go Back to Second Screen",
-              style: TextStyle(color: Colors.white),
+    return NestedWillPopScope(
+      onWillPop: () async {
+        return showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Close'),
+              content: Text('Close this screen?'),
+              actions: [
+                GestureDetector(
+                  child: Text('Yes'),
+                  onTap: () async {
+                    Navigator.pop(context, true);
+                  },
+                ),
+                GestureDetector(
+                  child: Text('No'),
+                  onTap: () async {
+                    Navigator.pop(context, false);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Scaffold(
+        backgroundColor: Colors.deepOrangeAccent,
+        body: Container(
+          child: Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).maybePop();
+              },
+              child: Text(
+                "Go Back to Second Screen",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
